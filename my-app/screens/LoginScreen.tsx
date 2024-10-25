@@ -1,39 +1,57 @@
 // LoginScreen.tsx
-import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { Input, Button, Icon } from '@rneui/themed'; // Native Elements
+import React, { useState } from 'react';
+import { View, StyleSheet, Text, Alert } from 'react-native';
+import { Input, Button, Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
+import { loginUser } from '../api';
 
 const LoginScreen: React.FC = () => {
   const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    navigation.navigate('ContactList');
+  const handleLogin = async () => {
+    try {
+      const response = await loginUser(email, password);
+      
+      if (response) {
+        Alert.alert("Sucesso", "Login realizado com sucesso!");
+        navigation.navigate('ContactList');
+      } else {
+        Alert.alert("Erro", "Credenciais inválidas");
+      }
+    } catch (error) {
+      Alert.alert("Erro", "Falha ao tentar fazer login na conta");
+    }
   };
 
   const handleRegister = () => {
-    navigation.navigate('Register'); // Navegar para tela de registro
+    navigation.navigate('Register');
   };
 
   return (
     <View style={styles.container}>
-      {/* Faixa superior com botão de voltar e título */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Login</Text>
       </View>
       <View style={styles.formContainer}>
       <Icon name="user" type="font-awesome" size={80} color="#517fa4" />
       <Input
-        placeholder="Login"
-        leftIcon={{ type: 'font-awesome', name: 'envelope', color: '#517fa4' }}
-        containerStyle={styles.inputContainer}
-      />
-      <Input
-        placeholder="Senha"
-        leftIcon={{ type: 'font-awesome', name: 'lock', color: '#517fa4' }}
-        secureTextEntry
-        containerStyle={styles.inputContainer}
-      />
+          placeholder="Email"
+          leftIcon={{ type: 'font-awesome', name: 'envelope', color: '#517fa4' }}
+          containerStyle={styles.inputContainer}
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+        />
+        <Input
+          placeholder="Senha"
+          leftIcon={{ type: 'font-awesome', name: 'lock', color: '#517fa4' }}
+          secureTextEntry
+          containerStyle={styles.inputContainer}
+          value={password}
+          onChangeText={setPassword}
+        />
       <Button
         title="Login"
         buttonStyle={styles.loginButton}
