@@ -8,7 +8,7 @@ const LoginScreen: React.FC = () => {
   const navigation = useNavigation();
 
   const handleLogin = () => {
-    // Função de login
+    navigation.navigate('ContactList');
   };
 
   const handleRegister = () => {
@@ -17,6 +17,11 @@ const LoginScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      {/* Faixa superior com botão de voltar e título */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Login</Text>
+      </View>
+      <View style={styles.formContainer}>
       <Icon name="user" type="font-awesome" size={80} color="#517fa4" />
       <Input
         placeholder="Login"
@@ -36,10 +41,10 @@ const LoginScreen: React.FC = () => {
       />
       <Button
         title="Cadastre-se"
-        type="outline"
         buttonStyle={styles.registerButton}
         onPress={handleRegister}
       />
+      </View>
     </View>
   );
 };
@@ -47,26 +52,43 @@ const LoginScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 20,
+  },
+  header: {
+    backgroundColor: 'blue',
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerTitle: {
+    flex: 1,
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginRight: 30,
+  },formContainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 30,
   },
   inputContainer: {
-    width: '80%',
     marginVertical: 10,
   },
   loginButton: {
-    backgroundColor: '#517fa4',
-    width: '80%',
+    backgroundColor: 'blue',
+    width: '100%',
     borderRadius: 5,
-    marginTop: 10,
+    marginTop: 20,
   },
   registerButton: {
-    width: '80%',
+    backgroundColor: 'red',
+    width: '100%',
     borderRadius: 5,
-    marginTop: 10,
+    marginTop: 20,
   },
+
 });
 
 export default LoginScreen;

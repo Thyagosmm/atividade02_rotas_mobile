@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Alert } from 'react-native';
-import { Input, Button } from '@rneui/themed'; // Native Elements
+import { View, StyleSheet, Alert, TouchableOpacity, Text } from 'react-native';
+import { Input, Button, Icon } from '@rneui/themed'; // Native Elements
+import { useNavigation} from '@react-navigation/native';
 
 const RegisterScreen: React.FC = () => {
   const [name, setName] = useState('');
   const [cpf, setCpf] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigation = useNavigation();
 
   const handleRegister = () => {
     // Aqui você pode adicionar a lógica para salvar o usuário, como uma requisição à API.
@@ -24,6 +26,13 @@ const RegisterScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon name="arrow-left" type="font-awesome" color="#fff" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Usuário</Text>
+      </View>
+      <View style={styles.formContainer}>
       <Input
         placeholder="Nome"
         value={name}
@@ -56,6 +65,7 @@ const RegisterScreen: React.FC = () => {
         buttonStyle={styles.saveButton}
         onPress={handleRegister}
       />
+      </View>
     </View>
   );
 };
@@ -63,18 +73,34 @@ const RegisterScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 20,
+  },
+  header: {
+    backgroundColor: 'blue',
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerTitle: {
+    flex: 1,
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginRight: 30,
+  },
+  formContainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 30,
   },
   inputContainer: {
-    width: '80%',
     marginVertical: 10,
   },
   saveButton: {
-    backgroundColor: '#517fa4',
-    width: '80%',
+    backgroundColor: 'blue',
+    width: '100%',
     borderRadius: 5,
     marginTop: 20,
   },
